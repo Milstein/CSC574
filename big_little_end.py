@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 from random import randint
 from array import array
@@ -13,52 +14,52 @@ def convert(in_str):
 
 # Generate two 32 bit binary strings
 
-x_native_bin = ""
-y_native_bin = ""
+x_nonnative_bin = ""
+y_nonnative_bin = ""
 for i in range (0, 32):
-    x_native_bin += str(randint(0,1))
-    y_native_bin += str(randint(0,1))
+    x_nonnative_bin += str(randint(0,1))
+    y_nonnative_bin += str(randint(0,1))
 
-x_native_int = int(b"{}".format(x_native_bin),2)
-y_native_int = int(b"{}".format(y_native_bin),2)
-
-print "X native: {}".format(x_native_int)
-print "Y native: {}".format(y_native_int)
-print "X native bin: {}".format(x_native_bin)
-print "Y native bin: {}".format(y_native_bin)
-
-# For both, swap 8 far left with 8 far right, same for right mid and left mid
-
-x_nonnative_bin = convert(x_native_bin)
-y_nonnative_bin = convert(y_native_bin)
 x_nonnative_int = int(b"{}".format(x_nonnative_bin),2)
 y_nonnative_int = int(b"{}".format(y_nonnative_bin),2)
 
-print "X non-native: {}".format(x_nonnative_int)
-print "Y non-native: {}".format(y_nonnative_int)
-print "X non-native bin: {}".format(x_nonnative_bin)
-print "Y non-native bin: {}".format(y_nonnative_bin)
+print "X nonnative bin: {}".format(x_nonnative_bin)
+print "Y nonnative bin: {}".format(y_nonnative_bin)
+print "X nonnative int: {}".format(x_nonnative_int)
+print "Y nonnative int: {}".format(y_nonnative_int)
+
+# For both, swap 8 far left with 8 far right, same for right mid and left mid
+
+x_native_bin = convert(x_nonnative_bin)
+y_native_bin = convert(y_nonnative_bin)
+print "X native bin: {}".format(x_native_bin)
+print "Y native bin: {}".format(y_native_bin)
 
 # Convert to int and add the numbers
 
-result_nonnative_int = x_nonnative_int + y_nonnative_int
+x_native_int = int(b"{}".format(x_native_bin),2)
+y_native_int = int(b"{}".format(y_native_bin),2)
+print "X native int: {}".format(x_native_int)
+print "Y native int: {}".format(y_native_int)
 
-print "Non-native math:"
-print "{} + {} = {}".format(x_nonnative_int, 
-                            y_nonnative_int, 
-                            result_nonnative_int)
+result_native_int = x_native_int + y_native_int
+
+print "Native math: {} + {} = {}".format(x_native_int, 
+                                         y_native_int, 
+                                         result_native_int)
 
 # Convert result to 32 bit binary string
 
-result_nonnative_bin = '{0:032b}'.format(result_nonnative_int)
+result_native_bin = '{0:032b}'.format(result_native_int)
 
-if len(result_nonnative_bin) > 32:
-    print "Overflow occurred, OS should handle it"
-    result_nonnative_bin = result_nonnative_bin[:32]
+if len(result_native_bin) > 32:
+    # Note: Handling this situation wasn't required by the problem
+    print "Overflow occurred, system-dependent logic should run here."
+    result_native_bin = result_native_bin[:32]
 
-print "Result non-native bin: {}".format(result_nonnative_bin)
+print "Result native bin: {}".format(result_native_bin)
 
 # Perform same swap that occurred in step two
 
-result_native_bin = convert(result_nonnative_bin)
-print "Result native: {}".format(result_native_bin)
+result_nonnative_bin = convert(result_native_bin)
+print "Result nonnative bin (final): {}".format(result_nonnative_bin)
